@@ -33,20 +33,19 @@ namespace GrowTopiaHacks
             Console.ReadKey();
             Console.Clear();
             ScreenReader sr = new ScreenReader();                                    
-            BotViewUpdate bv = new BotViewUpdate();
-            ScreenReader(sr);
-            ListOfScreenScaningClasses = ScreenScanning.MultipleCreation(16, Screen);
+            BotViewUpdate bv = new BotViewUpdate();            
+            ListOfScreenScaningClasses = ScreenScanning.MultipleCreation(16);
             while (true)
             {
                 ScreenReader(sr);
                 foreach (var i in ListOfScreenScaningClasses)
                 {
-                    i.Screen = Screen;
+                    i.Screen = new Bitmap(Screen);
                 }
                 List<Dictionary<int, int>> RunTasksPassingVariable = new List<Dictionary<int, int>>(RunTasks());
                 RepresentationOfBotView = bv.DataToTableInterpreter(RunTasksPassingVariable, RepresentationOfBotView, UserName, Screen); // Dictionary<666, posY of decoded row>
                 TestFuction(RepresentationOfBotView); //test
-            }            
+            }
         }
         public static ConcurrentBag<Dictionary<int, int>> RunTasks()
         {            

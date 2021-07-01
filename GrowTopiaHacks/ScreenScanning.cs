@@ -17,13 +17,16 @@ namespace GrowTopiaHacks
         List<List<int>> FarmableBlocksList = new List<List<int>>();
         List<int> BgBlocksList = new List<int>();
         public Bitmap Screen;
-        public ScreenScanning(Bitmap screen)
+        private ScreenScanning()
+        {            
+            
+        }
+        private void CopyingOutsideData()
         {
-            Screen = new Bitmap(screen); 
             using (StreamReader reader = new StreamReader("farmableBlocks.txt"))
             {
                 while (!reader.EndOfStream)
-                {                    
+                {
                     var line = reader.ReadLine();
                     var firstSeparation = line.Split(';');
                     for (int i = 0; i < 5; i++)
@@ -38,19 +41,20 @@ namespace GrowTopiaHacks
             {
                 var line = reader.ReadLine();
                 var pixelInPut = line.Split(',');
-                BgBlocksList = Array.ConvertAll(pixelInPut, x => int.Parse(x)).ToList();                
-            }                
+                BgBlocksList = Array.ConvertAll(pixelInPut, x => int.Parse(x)).ToList();
+            }
         }
-        public static List<ScreenScanning> MultipleCreation(int numberOfCreationOfObjects, Bitmap screen)
+        public static List<ScreenScanning> MultipleCreation(int numberOfCreationOfObjects)
         {
             List<ScreenScanning> Creations = new List<ScreenScanning>();
-            ScreenScanning classObject = new ScreenScanning(screen);
+            ScreenScanning classObject = new ScreenScanning();
+            classObject.CopyingOutsideData();
             for (int i = 1; i <= numberOfCreationOfObjects; i++)
             {
-                ScreenScanning deepCopyOfObj = (ScreenScanning)classObject.MemberwiseClone();
-                deepCopyOfObj.Screen = new Bitmap(classObject.Screen);
-                Creations.Add(deepCopyOfObj);
-                //Creations.Add((ScreenScanning)classObject.MemberwiseClone());
+                ScreenScanning deepCopy = new ScreenScanning();
+                deepCopy.FarmableBlocksList = new List<List<int>>(classObject.FarmableBlocksList);
+                deepCopy.BgBlocksList = new List<int>(classObject.BgBlocksList);
+                Creations.Add(deepCopy);
             }
             return Creations;
         }
