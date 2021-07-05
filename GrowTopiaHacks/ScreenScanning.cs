@@ -62,7 +62,7 @@ namespace GrowTopiaHacks
         {            
             Dictionary<int, int> partOfMainTable = new Dictionary<int, int>();
             partOfMainTable.Add(2000, posY); //used in BotViewUpdate in DataToTableInterpreter
-            for (int i = 0; i <= 1920; i++)
+            for (int i = 0; i < 1920; i++)
             {
                 if (IsFarmable(posY, i))
                 {
